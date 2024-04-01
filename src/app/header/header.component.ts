@@ -1,22 +1,27 @@
 import { Component, HostBinding, effect, signal } from '@angular/core';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('darkMode') ?? 'false')
-  );
+  theme: string = 'light';
+  activeDark: boolean = false;
 
-  @HostBinding('class.dark') get mode() {
-    return this.darkMode();
+  constructor(private themeService: ThemeService) {}
+
+  toggleTheme() {
+    this.themeService.toggleMode();
+    this.getCurrentTheme();
   }
 
-  constructor() {
-    effect(() => {
-      window.localStorage.setItem('darkMode', JSON.stringify(this.darkMode()));
+  getCurrentTheme() {
+    this.themeService.mode$.subscribe((theme) => {
+      this.theme = theme;
     });
+    this.theme === 'light'
+      ? (this.activeDark = false)
+      : (this.activeDark = true);
   }
 }
