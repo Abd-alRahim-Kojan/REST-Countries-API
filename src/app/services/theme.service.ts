@@ -11,8 +11,9 @@ export enum Theme {
 })
 export class ThemeService {
   private mode: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(
-    Theme.Light
+    this.getInitialTheme()
   );
+
   constructor() {}
 
   get mode$() {
@@ -25,5 +26,11 @@ export class ThemeService {
     } else {
       this.mode.next(Theme.Light);
     }
+    localStorage.setItem('theme', this.mode.value);
+  }
+
+  private getInitialTheme(): Theme {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? (savedTheme as Theme) : Theme.Light;
   }
 }
