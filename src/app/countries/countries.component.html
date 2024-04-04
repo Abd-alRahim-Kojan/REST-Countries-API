@@ -9,6 +9,8 @@
         <input
           type="text"
           placeholder="Search for a country..."
+          [(ngModel)]="searchValue"
+          (ngModelChange)="onSearchChange()"
           class="bg-transparent w-full outline-none ps-4 font-semibold"
         />
       </div>
@@ -41,6 +43,47 @@
             >
           </li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container mx-auto py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div
+        *ngFor="let country of countries"
+        routerLink="/name/{{ country.name.common }}"
+        class="max-w-sm rounded-lg overflow-hidden shadow-lg"
+      >
+        <img
+          class="w-full"
+          [src]="country.flags.svg"
+          [alt]="country.flags.alt"
+        />
+        <div class="px-6 py-4">
+          <h2 class="py-3 font-bold text-2xl">{{ country.name.common }}</h2>
+          <div class="text-[black] dark:text-[white] font-semibold mb-2">
+            <p>
+              Population:
+              <span class="dark:text-gray-500 font-light">{{
+                country.population | number
+              }}</span>
+            </p>
+            <p>
+              Region:
+              <span class="dark:text-gray-500 font-light">{{
+                country.region
+              }}</span>
+            </p>
+            <p>
+              Capital:
+              <span class="dark:text-gray-500 font-light">{{
+                country.capital
+              }}</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

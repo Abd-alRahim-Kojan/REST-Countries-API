@@ -7,20 +7,25 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CountriesComponent } from './countries/countries.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
+import { CountryComponent } from './countries/country/country.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    CountriesComponent
+    CountriesComponent,
+    CountryComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [ provideAnimations()],
-  bootstrap: [AppComponent]
+  providers: [provideAnimations()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
