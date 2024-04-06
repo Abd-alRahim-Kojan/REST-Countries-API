@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CountryComponent {
   // @input()
   name: string = '';
-  countryData: any = {};
+  countryData: any;
 
   constructor(private apiService: ApiService, private router: ActivatedRoute) {
     const nameParam = this.router.snapshot.paramMap.get('name');
@@ -22,17 +22,22 @@ export class CountryComponent {
 
   getCountryName(name: string) {
     this.apiService.getCountryByName(name).subscribe({
-      next: (res) => {
-        console.log(typeof res);
+      next: (res: Object) => {
+        console.log(typeof res); // this return object
 
-        this.countryData = res;
+        this.countryData = (res as any[])[0]; // Assign the first element of the response array
         console.log(this.countryData);
-        console.log(this.countryData.name.common);
-        
+        console.log(typeof this.countryData); // this return object
       },
       error: (err) => {
         console.error(err);
       },
     });
+  }
+
+  getCurrencyNames() {
+    return Object.values(
+      (this.countryData?.currencies || {}) as { [key: string]: any }
+    );
   }
 }

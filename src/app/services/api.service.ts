@@ -15,6 +15,8 @@ export class ApiService {
   }
 
   getCountryByName(name: string) {
-    return this.http.get(`${this.api}/name/${name}`).pipe(map((res) => res));
+    return this.http
+      .get(`${this.api}/name/${name.toLowerCase()}`)
+      .pipe(map((res) => res));
   }
 }
